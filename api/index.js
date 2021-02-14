@@ -16,12 +16,12 @@ module.exports = async (req, res) => {
     await axios(config)
     .then(function (response) {
     console.log(JSON.stringify(response.data));
-    const { name = 'World' } = req.query
-    res.status(200).send(`Namaste ${name}!`)
+
     })
     .catch(function (error) {
     console.log(error);
+    });
+    
     const { name = 'World' } = req.query
     res.status(200).send(`Namaste ${name}!`)
-    });
 }
