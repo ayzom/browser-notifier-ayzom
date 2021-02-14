@@ -11,17 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
-
-const allowlist = ['https://ayzom.com', 'https://www.ayzom.com']
-const corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false } // disable CORS for this request
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
+app.use(cors());
 
 const VAPID_PUBLIC_KEY="BBupVJwAFiLot1JDseHWTugXwXqFwycSUZ9s3lEQWhtyG0HGN10e0qd5cn7Ob6FJGFu3pDhivqFn7HGgyDMF8_g";
 const VAPID_PRIVATE_KEY="W3T4oLIY1ahRRjy8serG6RVDreEWLJdXPKEZ9ubv9MU";
@@ -38,7 +28,7 @@ app.get('/about', (req, res) => res.send('About Page Route'));
 
 app.get('/portfolio', (req, res) => res.send('Portfolio Page Route'));
 
-app.post('/save-user', cors(corsOptionsDelegate), async (req, res) => {
+app.post('/save-user', async (req, res) => {
     const subscription = req.body.subscription;
     
     const config = {
@@ -59,11 +49,11 @@ app.post('/save-user', cors(corsOptionsDelegate), async (req, res) => {
       });
 });
 
-app.get("/vapidPublicKey", cors(corsOptionsDelegate), (req, res) => {
+app.get("/vapidPublicKey", (req, res) => {
     res.send(VAPID_PUBLIC_KEY);
 });
 
-app.post('/notify', cors(corsOptionsDelegate), async (req, res) => {
+app.post('/notify', async (req, res) => {
         const subscription = req.body.subscription;
         const payload = null;
         const options = {
@@ -83,7 +73,7 @@ app.post('/notify', cors(corsOptionsDelegate), async (req, res) => {
         }, req.body.delay * 1000);
 });
 
-app.get('/save-vapid', cors(corsOptionsDelegate), async (req, res) => {
+app.get('/save-vapid', async (req, res) => {
     
     const { name = 'World' } = req.query
     res.status(200).send(`Namaste ${name}!`)
