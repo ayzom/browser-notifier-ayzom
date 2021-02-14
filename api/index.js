@@ -53,6 +53,29 @@ app.get("/vapidPublicKey", (req, res) => {
     res.send(VAPID_PUBLIC_KEY);
 });
 
+app.get("/inform-owner", async (req,res) => {
+  
+    let subscription = {
+      "endpoint" : "https://fcm.googleapis.com/fcm/send/d2K6w8w8TQE:APA91bEUt1eVdpw7gMHEgHYrP9bnBkEk_riAIVAgD0s4hUu6cpgE6yfozX938sXPAHtkGPFsNmyIvcF-Ye6riqwJyu0f3R8XLHPmoLQWzS6pzchP9FrNq2lNuef8-07Cx4vuZmoAsGy7",
+      "keys" : {
+        "auth" : "QPxZ9RMrtu4PzULhKhZ8XQ",
+        "p256dh" : "BMul_sxq2DbsjiE2vQaUK-VicxFwrBdEYdHoUJXlKL2m492bAwO1jShsbXioy_WhXDBXErhOWmQ6FnU3O8wUuJc"
+      }
+    }
+
+    await webPush
+    .sendNotification(subscription)
+    .then(function (response) {
+        console.log(response);
+        return response;
+    })
+    .catch(function (error) {
+        console.log(error);
+        return error;
+    });
+    res.status(200).send(`Sent`);
+})
+
 app.post('/notify', async (req, res) => {
         const subscription = req.body.subscription;
         const payload = null;
