@@ -28,7 +28,7 @@ app.get('/about', (req, res) => res.send('About Page Route'));
 
 app.get('/portfolio', (req, res) => res.send('Portfolio Page Route'));
 
-app.post('/save-user', (req, res) => {
+app.post('/save-user', async (req, res) => {
     const subscription = req.body.subscription;
     
     const config = {
