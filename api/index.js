@@ -11,7 +11,7 @@ app.get('/portfolio', (req, res) => res.send('Portfolio Page Route'));
 
 app.get('/contact', (req, res) => res.send('Contact Page Route'));
 
-app.get('/save-vapid', (req, res) => {
+app.get('/save-vapid', async (req, res) => {
 
     var data = JSON.stringify({"device":"ihpone"});
     
