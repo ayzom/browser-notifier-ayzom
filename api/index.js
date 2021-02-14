@@ -1,21 +1,26 @@
+var axios = require('axios');
 module.exports = async (req, res) => {
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     
-    var raw = JSON.stringify({"device":"samsung123"});
+    var data = JSON.stringify({"device":"ihpone"});
     
-    var requestOptions = {
-      method: 'PUT',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
+    var config = {
+      method: 'put',
+      url: 'https://ayzompush.firebaseio.com/index.json',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
     };
     
-    await fetch("https://ayzompush.firebaseio.com/index.json", requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    await axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
     
     const { name = 'World' } = req.query
     res.status(200).send(`Namaste ${name}!`)
