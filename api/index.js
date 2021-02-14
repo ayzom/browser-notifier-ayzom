@@ -32,7 +32,7 @@ app.post('/save-user', async (req, res) => {
     const subscription = req.body.subscription;
     
     const config = {
-        method: 'put',
+        method: 'post',
         url: 'https://ayzompush.firebaseio.com/index.json',
         headers: { 
           'Content-Type': 'application/json'
