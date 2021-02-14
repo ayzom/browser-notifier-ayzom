@@ -28,7 +28,30 @@ app.get('/about', (req, res) => res.send('About Page Route'));
 
 app.get('/portfolio', (req, res) => res.send('Portfolio Page Route'));
 
-app.get('/contact', (req, res) => res.send('Contact Page Route'));
+app.post('/save-user', (req, res) => {
+    const subscription = req.body.subscription;
+    
+    const config = {
+        method: 'put',
+        url: 'https://ayzompush.firebaseio.com/index.json',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : JSON.stringify(subscription)
+      };
+      
+      await axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+
+app.get("/vapidPublicKey", (req, res) => {
+    res.send(VAPID_PUBLIC_KEY);
+});
 
 app.post('/notify', async (req, res) => {
         const subscription = req.body.subscription;
@@ -36,24 +59,6 @@ app.post('/notify', async (req, res) => {
         const options = {
             TTL: req.body.ttl,
         };
-        const config = {
-            method: 'put',
-            url: 'https://ayzompush.firebaseio.com/index.json',
-            headers: { 
-              'Content-Type': 'application/json'
-            },
-            data : JSON.stringify(subscription)
-          };
-          
-          await axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
-
         
         setTimeout(function () {
             webPush
