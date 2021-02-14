@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
-app.use(cors());
+//app.use(cors());
 
 const VAPID_PUBLIC_KEY="BBupVJwAFiLot1JDseHWTugXwXqFwycSUZ9s3lEQWhtyG0HGN10e0qd5cn7Ob6FJGFu3pDhivqFn7HGgyDMF8_g";
 const VAPID_PRIVATE_KEY="W3T4oLIY1ahRRjy8serG6RVDreEWLJdXPKEZ9ubv9MU";
